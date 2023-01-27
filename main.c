@@ -6,7 +6,7 @@
 /*   By: hmochida <hmochida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:03:02 by hmochida          #+#    #+#             */
-/*   Updated: 2023/01/25 21:13:01 by hmochida         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:07:34 by hmochida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,21 @@ void create_image(t_mlx *mlx)
 		}
 		//draw the pixels of the stripe as a vertical line
 		int	count = 0;
+		while (count < drawStart)
+		{
+			ft_mlx_putpix(x, count, C_CEIL, mlx->img_list_head);
+			count++;
+		}
+		count = 0;
 		while (count < drawEnd - drawStart)
 		{
 			ft_mlx_putpix(x, drawStart + count, color, mlx->img_list_head);
-			count ++;
+			count++;
+		}
+		while (count < screenHeight)
+		{
+			ft_mlx_putpix(x, drawStart + count, C_FLOOR, mlx->img_list_head);
+			count++;
 		}
 	}
 }

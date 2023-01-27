@@ -6,7 +6,7 @@
 /*   By: hmochida <hmochida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:00:33 by hmochida          #+#    #+#             */
-/*   Updated: 2023/01/25 21:19:43 by hmochida         ###   ########.fr       */
+/*   Updated: 2023/01/27 19:08:17 by hmochida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_mlx
 # define C_BLUE		0x0000ff
 # define C_YELLOW	0xffff00
 # define C_WHITE	0xffffff
+# define C_CEIL		0xffddff
+# define C_FLOOR	0x00ffdd
 
 /* KEY PRESS CODES*/
 # ifndef X_KEYPRESS
