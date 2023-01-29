@@ -6,11 +6,10 @@
 /*   By: hmochida <hmochida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:03:02 by hmochida          #+#    #+#             */
-/*   Updated: 2023/01/27 19:07:34 by hmochida         ###   ########.fr       */
+/*   Updated: 2023/01/29 20:43:07 by hmochida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include "poc.h"
 
 void	key_esc(t_mlx *mlx);
@@ -29,30 +28,31 @@ double dirX = -1, dirY = 0; //initial direction vector
 double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 int worldMap[mapWidth][mapHeight] =
 	{
-	{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,7,7,7,7,7,7},
-	{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-	{4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-	{4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},
-	{4,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,7},
-	{4,0,4,0,0,0,0,5,5,5,5,5,5,5,5,5,7,7,0,7,7,7,7,7},
-	{4,0,5,0,0,0,0,5,0,5,0,5,0,5,0,5,7,0,0,0,7,7,7,1},
-	{4,0,6,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-	{4,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,1},
-	{4,0,8,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,0,0,0,8},
-	{4,0,0,0,0,0,0,5,0,0,0,0,0,0,0,5,7,0,0,0,7,7,7,1},
-	{4,0,0,0,0,0,0,5,5,5,5,0,5,5,5,5,7,7,7,7,7,7,7,1},
-	{6,6,6,6,6,6,6,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-	{8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-	{6,6,6,6,6,6,0,6,6,6,6,0,6,6,6,6,6,6,6,6,6,6,6,6},
-	{4,4,4,4,4,4,0,4,4,4,6,0,6,2,2,2,2,2,2,2,3,3,3,3},
-	{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-	{4,0,0,0,0,0,0,0,0,0,0,0,6,2,0,0,5,0,0,2,0,0,0,2},
-	{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-	{4,0,6,0,6,0,0,0,0,4,6,0,0,0,0,0,5,0,0,0,0,0,0,2},
-	{4,0,0,5,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,2,0,2,2},
-	{4,0,6,0,6,0,0,0,0,4,6,0,6,2,0,0,5,0,0,2,0,0,0,2},
-	{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
-	{4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3}
+//   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, // 0
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 1
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 2
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 3
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 4
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 5
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 6
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 7
+	{2,0,0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0,0,0,0,3}, // 8
+	{2,0,0,0,0,0,0,0,0,3,0,0,0,2,0,0,0,0,0,0,0,0,0,3}, // 9
+	{2,0,0,0,0,0,0,0,0,3,0,0,0,2,0,0,0,0,0,0,0,0,0,3}, // 0
+	{2,0,0,0,0,0,0,0,0,3,0,0,0,2,0,0,0,0,0,0,0,0,0,3}, // 1
+	{2,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,3}, // 2
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 3
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 4
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 5
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 6
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 7
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 8
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 9
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 0
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 1
+	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}, // 2
+	{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4}  // 3
 	};
 
 int main(void)
@@ -74,9 +74,6 @@ int main(void)
 
 	create_image(mlx);
 
-
-	//encher a linguiça do data aqui
-
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, img->img_ptr, 0, 0);
 	mlx_loop(mlx->mlx_ptr);
 	printf ("ok\n");
@@ -97,8 +94,8 @@ void create_image(t_mlx *mlx)
 		double rayDirX = dirX + planeX * cameraX;
 		double rayDirY = dirY + planeY * cameraX;
 		//which box of the map we're in
-		int mapX = (int)posX;
-		int mapY = (int)posY;
+		int mapX = (int) posX;
+		int mapY = (int) posY;
 
 		//length of ray from current position to next x or y-side
 		double sideDistX;
@@ -148,21 +145,27 @@ void create_image(t_mlx *mlx)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if(worldMap[mapX][mapY] > 0)
+			if(worldMap[mapY][mapX] > 0)
 				hit = 1;
 			if(side == 0)
 				perpWallDist = (sideDistX - deltaDistX);
 			else
 				perpWallDist = (sideDistY - deltaDistY);
 		}
-
+		if (mapX && mapY && mapX < 23 && mapY < 23)
+		{
+			static int iteration;
+			printf("%d:\tX:%d Y:%d\n", iteration, mapX, mapY);
+			printf ("%d\n", worldMap[mapX][mapY]);
+			iteration++;
+		}
 		int lineHeight = (int)(h / perpWallDist);
 		int drawStart = -lineHeight / 2 + h / 2;
 		if(drawStart < 0) drawStart = 0;
 			int drawEnd = lineHeight / 2 + h / 2;
 		if(drawEnd >= h) drawEnd = h - 1;
 		int color;
-		switch(worldMap[mapX][mapY])
+		switch(worldMap[mapY][mapX])
 		{
 			case 1:  color = C_RED;    break; //red
 			case 2:  color = C_GREEN;  break; //green
@@ -170,12 +173,29 @@ void create_image(t_mlx *mlx)
 			case 4:  color = C_WHITE;  break; //white
 			default: color = C_YELLOW; break; //yellow
 		}
-		// printf ("Color: 0x%06X\n", color);
+		printf ("Color: 0x%06X\n", color);
 		if(side == 1)
 		{
-			color = color / 2;
+			color = color & 0xf0f0f0;
 		}
-		//draw the pixels of the stripe as a vertical line
+		// draw the pixels of the stripe as a vertical line
+
+		// if(worldMap[mapX][mapY] == 1)
+		// 	color = C_RED;
+		// else if(worldMap[mapY][mapX] == 2)
+		// 	color = C_GREEN;
+		// else if(worldMap[mapY][mapX] == 3)
+		// 	color = C_BLUE;
+		// else if(worldMap[mapY][mapX] == 4)
+		// 	color = C_WHITE;
+		// else
+		// 	color = 0;
+		// if (color == 0);
+		// 	printf("\n------- mapX: [%d] mapY: [%d] is[%d] dirX:[%f], dirY:[%f]--------\n", mapX, mapY, worldMap[mapY][mapX], dirX, dirY);
+		// if (side)
+		// 	color = color & 0xf0f0f0;
+		// printf("Color: 0x%06X\n", color);
+
 		int	count = 0;
 		while (count < drawStart)
 		{

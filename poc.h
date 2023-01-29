@@ -6,7 +6,7 @@
 /*   By: hmochida <hmochida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 21:00:33 by hmochida          #+#    #+#             */
-/*   Updated: 2023/01/27 19:08:17 by hmochida         ###   ########.fr       */
+/*   Updated: 2023/01/29 20:10:55 by hmochida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <mlx.h>
 #include <string.h>
-
+#include <math.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -32,6 +32,8 @@
 
 #define MOVESPEED 0.1
 #define ROTSPEED 5 * 0.01745329251
+#define COS5DEG	0.99619469809
+#define SIN5DEG	0.08715574274
 
 typedef struct s_img
 {
